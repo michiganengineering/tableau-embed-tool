@@ -3,133 +3,295 @@
 <!-- Author: Zihan Li -->
 
 <head>
-    <title> Tableau Embed Tool </title>
-    <!-- Latest compiled and minified CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <!-- jQuery library -->
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <!-- CSS writen by Zihan Li -->
-    <style>
-    .boxing {
-        margin: 20px;
-    }
+<title> Tableau Embed Tool </title>
+<!-- Latest compiled and minified CSS -->
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- jQuery library -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- FontAwesome JavaScript -->
+<script src="https://use.fontawesome.com/7c44528901.js"></script>
 
-    .well-disp {
-        margin-top: 20px;
-        margin-bottom: 0px;
-    }
+<link href='http://fonts.googleapis.com/css?family=Open+Sans|Open+Sans:b,600' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Source Code Pro|Source Code Pro:b' rel='stylesheet'>
+<!-- CSS writen by Zihan Li -->
+<style>
+  body {
+    background:#edf3f8;
+  }
+  .boxing {
+    margin: 20px;
+  }
 
-    .well {
-        word-break: break-all;
-    }
+  .michigan-title {
+    top: 0px;
+    left: 0px;
+    padding: 10px 10px 10px 10px;
+    background-color: #00274C;
+  }
 
-    .tableau-wapper {
-        border: 2px solid;
-        padding: 10px;
-        width: 100%;
-        max-width: 100%;
-        min-width: 100%;
-        resize: both;
-        overflow: auto;
-    }
+  .panel-default {
+    border-radius: 0px !important;
+    /*border-color: #48648E !important;*/
+  }
 
-    .tableau-input {
-        width: 100%;
-        max-width: 100%;
-        min-width: 100%;
-        height: 100px;
-        overflow: auto;
-    }
+  .panel-heading {
+    margin-top: -1px;
+    margin-left: -2px;
+    margin-right: -2px;
+    border-color: #48648E !important;
+    border-radius: 0px !important;
+    background-color: #48648E !important;
+  }
 
-    .pad {
-        margin-bottom: 350px
-    }
-    </style>
-    <!-- Script writen by Zihan Li -->
-    <script>
-    var embedded_code = ""
+  .panel-title {
+    color: white;
+  }
 
-    $(document).ready(function() {
-        $("#tool-four-embed").click(() => {
-            let text = $("#tableau-input").val()
-            // save the original copy:
-            embedded_code = text
-            // we only need to object section of the code:
-            let start = text.indexOf("<object")
-            let end = text.indexOf("</object>")
-            if (start == -1 || end == -1) {
-                alert("input embed code not valid")
-                return 1
-            }
-            // replace width and height to 100%:
-            var obj_text = text.substring(start, end + 9)
-            obj_text = obj_text.replace(/width='\d+'/, "width='100%'")
-            obj_text = obj_text.replace(/height='\d+'/, "height='100%'")
-            obj_text = obj_text.replace("'toolbar' value='yes'", "'toolbar' value='no'")
-            // embed tableau into the html:
-            $("#tableau-wapper").html(obj_text)
-            $.getScript("https://tableau.dsc.umich.edu/javascripts/api/viz_v1.js");
-        });
+  .well-disp {
+    font-family: 'Source Code Pro';
+    background: #edf3f8;
+    border:1px solid #aabdcd;
+    border-radius: 2px;
+    font-size: 13px;
+    padding: 10px;
+    width: 100%;
+    word-break: break-all;
+    color: #464b4f;
+    text-align: left;
+  }
 
-        $("#tool-four-gen").click(() => {
-            if (embedded_code == "") {
-                alert("no input")
-                return 1
-            }
-            //replace width to 100% and height to the current height of the box:
-            embedded_code = embedded_code.replace(/width='\d+'/, "width='100%'")
-            embedded_code = embedded_code.replace(/width: \d+px/, "width: 100%")
-            embedded_code = embedded_code.replace(/height='\d+'/, "height='" + $("#tableau-wapper").height() + "px'")
-            embedded_code = embedded_code.replace(/height: \d+px/, "height: " + $("#tableau-wapper").height() + "px")
-            //replace toolbar yes to no
-            embedded_code = embedded_code.replace("'toolbar' value='yes'", "'toolbar' value='no'")
-            $("#url-four").text(embedded_code);
-        });
-    });
-    </script>
+  .tool-title {
+    position: inline;
+    font-size:24px;
+    color:#00274c;
+    background:#e2edf6;
+    padding: 10px 10px 10px 10px;
+    font-family: "Open Sans";
+    font-weight: bold;
+  }
+
+  .tableau-wapper {
+    border:1px solid #801010;
+    border-radius:2px;
+    padding: 10px;
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+    resize: both;
+    overflow: auto;
+  }
+
+  .tableau-input {
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+    height: 140px;
+    overflow: auto;
+    background:#edf3f8;
+    border:1px solid #aabdcd;
+    border-radius:2px;
+    font-family: 'Source Code Pro';
+    font-size:13px;
+  }
+
+  .tableau-input::placeholder {
+    font-family: 'Source Code Pro';
+    font-weight: bold;
+    font-size:15px;
+    color:#9a3324;
+  }
+
+  .a-click {
+    font-size:18px;
+    color:#ffcb05;
+  }
+
+  .pad {
+    margin-bottom: 350px
+  }
+
+  .instruction {
+    font-family: "Open Sans";
+    font-size:14px;
+    color:#171717;
+    line-height:21px;
+    text-align:left;
+    margin-top: 20px;
+    margin-bottom: 3px;
+  }
+
+  .font-bold {
+    font-weight: bold;
+  }
+
+  .generatebtn {
+      text-transform: uppercase;
+      border:1px solid #00b2a9;
+      border-radius:2px;
+      font-size:16px;
+      background-color: #00b2a9;
+      color: white;
+      padding: 10px 3px 10px 3px;
+      cursor: pointer;
+      width: 100%;
+      font-family: 'Open Sans';
+      font-weight: 600;
+  }
+
+  .generatebtn:hover, .generatebtn:focus {
+      background-color: #009289;
+      border:1px solid #009289;
+  }
+
+  .copybtn {
+      border:1px solid #aabdcd;
+      border-radius:2px;
+      background:#aabdcd;
+      padding: 10px 10px 10px 10px;
+      cursor: pointer;
+      width: 100%;
+  }
+
+  .copybtn:hover, .copybtn:focus {
+      background-color: #9aadbd;
+      border:1px solid #9aadbd;
+  }
+
+  .click-show {
+    display: none;
+  }
+
+</style>
+<!-- Script writen by Zihan Li -->
+<script>
+  var embedded_code = ""
+
+  $(document).ready(function() {
+      $("#tool-four-embed").click(() => {
+          let text = $("#tableau-input").val()
+          // save the original copy:
+          if (text.length === 0){
+              $("#tableau-input").attr("placeholder", ">ERROR: An embed code is required to preview! Please paste code here.");
+              $("#tableau-input").val("")
+              return 0
+          }
+
+          embedded_code = text
+          // we only need to object section of the code:
+          let start = text.indexOf("<object")
+          let end = text.indexOf("</object>")
+          if (start == -1 || end == -1) {
+              $("#tableau-input").attr("placeholder", ">ERROR: Invalid embed code. If you have entered the correct code, please contact the developer.");
+              $("#tableau-input").val("")
+              return 0
+          }
+          // replace width and height to 100%:
+          var obj_text = text.substring(start, end + 9)
+          obj_text = obj_text.replace(/width='\d+'/, "width='100%'")
+          obj_text = obj_text.replace(/height='\d+'/, "height='100%'")
+          obj_text = obj_text.replace("'toolbar' value='yes'", "'toolbar' value='no'")
+          // embed tableau into the html:
+          $("#tableau-wapper").html(obj_text)
+          $.getScript("https://tableau.dsc.umich.edu/javascripts/api/viz_v1.js");
+          $("#click-show-one").show()
+      });
+
+      $("#tool-four-gen").click(() => {
+          if (embedded_code == "") {
+              alert("no input")
+              return 1
+          }
+          //replace width to 100% and height to the current height of the box:
+          embedded_code = embedded_code.replace(/width='\d+'/, "width='100%'")
+          embedded_code = embedded_code.replace(/width: \d+px/, "width: 100%")
+          embedded_code = embedded_code.replace(/height='\d+'/, "height='" + $("#tableau-wapper").height() + "px'")
+          embedded_code = embedded_code.replace(/height: \d+px/, "height: " + $("#tableau-wapper").height() + "px")
+          //replace toolbar yes to no
+          embedded_code = embedded_code.replace("'toolbar' value='yes'", "'toolbar' value='no'")
+          $("#url-four").text(embedded_code);
+          $("#click-show-two").show()
+      });
+
+      $("#url-four-copy").click(() => {
+        copy_url_clip("#url-four")
+        $child=$("#url-four-copy").children();
+        $child.removeClass("fa-clipboard").addClass("fa-check");
+      });
+
+  });
+
+  function copy_url_clip(id) {
+    var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val($(id).text()).select();
+        document.execCommand("copy");
+        $temp.remove();
+  }
+</script>
 </head>
 
 <body>
-    <div class="jumbotron">
-        <div class="container text-center">
-            <h2 class="display-3">Tableau Tool</h2>
-        </div>
-    </div>
+  <div class="michigan-title"> 
+
+    <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48c3ZnIHZlcnNpb249IjEuMSIgaWQ9InVtaWNoLWVuZ2luLWxvZ28iIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSItMTI4IDM3OS45IDM1NC45IDM1LjEiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgLTEyOCAzNzkuOSAzNTQuOSAzNS4xIiB4bWw6c3BhY2U9InByZXNlcnZlIj48ZyBpZD0ibWljaC1lbmdpbiI+PHBhdGggaWQ9Im0iIGZpbGw9IiNGRkZGRkYiIGQ9Ik0tNTcuOCwzODIuN0wtNTcuOCwzODIuN2w2LDE5LjNoMi42bDYuMS0xOS4zaDAuMVY0MDJoMi44di0yMS43aC00LjZsLTUuNSwxOC4yaC0wLjFsLTUuNS0xOC4yaC00LjVWNDAyaDIuNkwtNTcuOCwzODIuN0wtNTcuOCwzODIuN3oiLz48cGF0aCBpZD0iaWNoIiBmaWxsPSIjRkZGRkZGIiBkPSJNLTM2LjQsMzgwLjNoMi44VjQwMmgtMi44VjM4MC4zeiBNLTE3LjQsMzg2LjNjMC4zLTQuMi0xLjQtNi40LTUuNy02LjRjLTQuMywwLTcsMS43LTcsNy45djYuMWMwLDguNCw0LjEsOC42LDYuOCw4LjZjMS40LDAsNi4yLDAsNi4xLTYuOGgtMi45YzAsNC4yLTIuNiw0LjUtMy40LDQuNWMtMi4xLDAtMy45LTAuNi0zLjktNS45di01LjhjMC0zLjcsMC41LTQuMywwLjYtNC41YzAuMS0wLjMsMS0xLjcsMy4zLTEuN2MwLjYsMCwxLjksMC4yLDIuNCwwLjljMC42LDAuNywwLjcsMS45LDAuNiwzLjFDLTIwLjMsMzg2LjMtMTcuNCwzODYuMy0xNy40LDM4Ni4zeiBNLTExLjUsNDAydi05LjloNy42djkuOWgyLjh2LTIxLjdoLTIuOHY5LjRoLTcuNnYtOS40aC0yLjhWNDAySC0xMS41eiIvPjxwYXRoIGlkPSJpZ2FuLWVuZyIgZmlsbD0iI0ZGRkZGRiIgZD0iTTIuOSwzODAuM2gyLjhWNDAySDIuOVYzODAuM3ogTTIyLjgsMzg2LjFjMC4yLTQuNS0yLTYuMi02LjctNi4yYy00LjYsMC02LjgsMi44LTYuOCw3LjF2Ny4xYzAsNiwyLjIsOC40LDYuOCw4LjRjMi44LDAsNC45LTAuNyw2LjYtMS42di0xMC41aC02Ljh2Mi40aDR2Ni41Yy0wLjYsMC40LTEuOSwxLTMuOSwxYy0yLjYsMC00LTEuMi00LTUuOXYtNy4zYzAtNC41LDMuMS00LjcsNC00LjdjMi44LDAsMy44LDEuNCwzLjgsMy45QzE5LjksMzg2LjEsMjIuOCwzODYuMSwyMi44LDM4Ni4xeiBNMjQuNSw0MDJoMi44bDEuNi01LjJoOC40bDEuNiw1LjJoMy4xbC03LjEtMjEuN2gtMy41TDI0LjUsNDAyTDI0LjUsNDAyeiBNMzYuNSwzOTQuNGgtNi45bDMuNC0xMS41SDMzTDM2LjUsMzk0LjR6IE01NiwzODAuM3YxOC41aC0wLjFsLTguNC0xOC41aC0zLjlWNDAyaDIuNXYtMTguOGgwLjFsOC42LDE4LjhoMy44di0yMS43QzU4LjUsMzgwLjMsNTYsMzgwLjMsNTYsMzgwLjN6IE04MS44LDQwMnYtMi40aC04LjZ2LTcuNUg4MXYtMi40aC03Ljh2LTdoOC40di0yLjRINzAuNFY0MDJIODEuOHogTTk2LjYsMzgwLjN2MTguNWgtMC4xbC04LjQtMTguNWgtMy45VjQwMmgyLjV2LTE4LjhoMC4xbDguNiwxOC44aDMuOHYtMjEuN0g5Ni42TDk2LjYsMzgwLjN6IE0xMTYsMzg2LjFjMC4yLTQuNS0yLTYuMi02LjctNi4yYy00LjYsMC02LjgsMi44LTYuOCw3LjF2Ny4xYzAsNiwyLjIsOC40LDYuOCw4LjRjMi44LDAsNC45LTAuNyw2LjYtMS42di0xMC41aC02Ljd2Mi40aDR2Ni41Yy0wLjYsMC40LTEuOSwxLTMuOSwxYy0yLjYsMC00LTEuMi00LTUuOXYtNy4zYzAtNC41LDMuMS00LjcsNC00LjdjMi44LDAsMy44LDEuNCwzLjgsMy45SDExNkwxMTYsMzg2LjF6Ii8+PHBhdGggaWQ9ImluZWVyIiBmaWxsPSIjRkZGRkZGIiBkPSJNMTIwLjEsMzgwLjNoMi44VjQwMmgtMi44VjM4MC4zeiBNMTM5LjMsMzgwLjN2MTguNWgtMC4xbC04LjQtMTguNWgtMy45VjQwMmgyLjV2LTE4LjhoMC4xbDguNSwxOC44aDMuOHYtMjEuN0gxMzkuM0wxMzkuMywzODAuM3ogTTE1Ni43LDQwMnYtMi40aC04LjZ2LTcuNWg3Ljh2LTIuNGgtNy44di03aDguNHYtMi40aC0xMS4yVjQwMkgxNTYuN3ogTTE3MC40LDQwMnYtMi40aC04LjZ2LTcuNWg3Ljh2LTIuNGgtNy44di03aDguNHYtMi40SDE1OVY0MDJIMTcwLjR6IE0xNzUuNCwzODIuN2g0LjJjMi4xLDAsMi45LDEuNywyLjksMy4zYzAsMS45LTEsMy42LTIuOSwzLjZoLTQuMUwxNzUuNCwzODIuN0wxNzUuNCwzODIuN3ogTTE3OC42LDM5MmMwLjksMCwzLjEsMC4xLDMuMywyLjhjMC4yLDIuOSwwLjEsNS43LDAuOCw3LjJoMi45Yy0wLjQtMS40LTAuNy00LjctMC43LTUuN2MtMC4yLTQuNC0xLTUuMi0zLjUtNS42di0wLjFjMi41LTAuNCw0LTIuNCw0LTQuOWMwLTIuNy0xLjQtNS40LTUuMi01LjRoLTcuNVY0MDJoMi44di0xMEwxNzguNiwzOTJMMTc4LjYsMzkyeiIvPjxwYXRoIGlkPSJpbmciIGZpbGw9IiNGRkZGRkYiIGQ9Ik0xODguNCwzODAuM2gyLjhWNDAyaC0yLjhWMzgwLjN6IE0yMDcuNSwzODAuM3YxOC41aC0wLjFsLTguNC0xOC41aC0zLjlWNDAyaDIuNXYtMTguOGgwLjFsOC41LDE4LjhoMy44di0yMS43SDIwNy41TDIwNy41LDM4MC4zeiBNMjI2LjksMzg2LjFjMC4yLTQuNS0yLTYuMi02LjctNi4yYy00LjYsMC02LjgsMi44LTYuOCw3LjF2Ny4xYzAsNiwyLjIsOC40LDYuOCw4LjRjMi44LDAsNC45LTAuNyw2LjYtMS42di0xMC41aC02Ljd2Mi40aDR2Ni41Yy0wLjYsMC40LTEuOSwxLTMuOSwxYy0yLjYsMC00LTEuMi00LTUuOXYtNy4zYzAtNC41LDMuMS00LjcsNC00LjdjMi44LDAsMy44LDEuNCwzLjgsMy45SDIyNi45TDIyNi45LDM4Ni4xeiIvPjwvZz48Zz48cGF0aCBpZD0iYmxvY2stbSIgZmlsbD0iI0ZGQ0YwMSIgZD0iTS0xMDMuOCw0MDguOGwtOS45LTEzLjZ2OS45aDMuOXY5LjdILTEyOHYtOS43aDMuN3YtMTUuMmgtMy43di05LjdoMTQuM2w5LjksMTMuN2w5LjktMTMuN2gxNC4zdjkuN2gtMy43djE1LjJoMy43djkuN2gtMTguM3YtOS43aDMuOXYtOS45Qy05My44LDM5NS4yLTEwMy44LDQwOC44LTEwMy44LDQwOC44eiIvPjxwYXRoIGlkPSJ1bWljaCIgZmlsbD0iI0ZGRkZGRiIgZD0iTTc3LjMsNDE0Ljh2LTAuNGMwLjUsMCwwLjktMC4xLDAuOS0wLjVjMC0wLjEsMC0wLjMtMC4xLTAuNGwtMC4yLTAuN2gtMi42bC0wLjIsMC42YzAsMC4yLTAuMSwwLjMtMC4xLDAuNWMwLDAuNSwwLjUsMC42LDEsMC42djAuNGgtM3YtMC40YzAuOCwwLDEtMC4yLDEuMy0xbDItNS40bC0wLjEtMC4yYzAuOS0wLjMsMS4xLTAuNCwxLjUtMC43bDAuMywxLjFsMS42LDVjMC4zLDAuOSwwLjQsMS4xLDEuMiwxLjJ2MC40TDc3LjMsNDE0LjhDNzcuMyw0MTQuOCw3Ny4zLDQxNC44LDc3LjMsNDE0Ljh6IE03Ni42LDQwOC45bC0xLjEsM2gyLjFMNzYuNiw0MDguOUw3Ni42LDQwOC45eiBNNTEuMSw0MTMuMmMtMC4zLDAuNS0xLjEsMS44LTMuMSwxLjhjLTIuMiwwLTMuNi0xLjYtMy42LTMuOGMwLTIsMS4yLTMuOSwzLjctMy45YzEuMywwLDIsMC41LDIuNCwwLjlsMC41LTAuNWwwLDIuMmwtMC4zLDAuMWMtMC4xLTAuNC0wLjMtMC44LTAuOC0xLjNjLTAuMi0wLjItMC44LTAuNy0xLjUtMC43Yy0xLjMsMC0yLjQsMS4xLTIuNCwzYzAsMS42LDAuOSwzLjEsMi42LDMuMWMxLjMsMCwxLjgtMC43LDIuMS0xLjNMNTEuMSw0MTMuMkw1MS4xLDQxMy4yeiBNNTIuMyw0MTQuOHYtMC40YzAuOC0wLjEsMC44LTAuMiwwLjgtMWMwLTAuMywwLTAuNSwwLTAuOHYtMy4xYzAtMC41LDAtMSwwLTEuMmMwLTAuNC0wLjItMC41LTAuOC0wLjZ2LTAuNGgzLjF2MC40Yy0wLjYsMC4xLTAuOCwwLjEtMC45LDAuNWMtMC4xLDAuMi0wLjEsMC44LTAuMSwxLjJ2MWMwLjYsMCwxLjEsMC4xLDEuNywwLjFjMC42LDAsMS4xLDAsMS43LTAuMXYtMS4yYzAtMS4zLDAtMS40LTEtMS41di0wLjRoMy4ydjAuNGMtMC45LDAuMS0wLjksMC4xLTAuOSwxLjV2My4xYzAsMC4zLDAsMS4yLDAsMS40YzAuMSwwLjQsMC4zLDAuNSwwLjgsMC41djAuNGgtMy4ydi0wLjRjMC43LTAuMSwwLjktMC4xLDEtMC42YzAtMC4yLDAtMC41LDAtMXYtMS4zYy0wLjYsMC0xLjEtMC4xLTEuNy0wLjFjLTAuNiwwLTEuMSwwLTEuOCwwLjF2MS4zYzAsMS41LDAsMS41LDEsMS42djAuNEw1Mi4zLDQxNC44TDUyLjMsNDE0LjhMNTIuMyw0MTQuOHogTTYxLjQsNDE0Ljh2LTAuNGMwLjctMC4xLDAuOS0wLjIsMC45LTAuOXYtMy45YzAtMS41LDAtMS42LTAuOS0xLjd2LTAuNGgzLjF2MC40Yy0wLjksMC4xLTAuOSwwLjEtMC45LDEuN3YzYzAsMC4zLDAsMS4xLDAsMS4zYzAsMC40LDAuMywwLjYsMC44LDAuNnYwLjRINjEuNEw2MS40LDQxNC44eiBNNDAuNSw0MTQuOHYtMC40YzAuNy0wLjEsMC45LTAuMiwwLjktMC45di0zLjljMC0xLjUsMC0xLjYtMC45LTEuN3YtMC40aDN2MC40Yy0wLjksMC4xLTAuOSwwLjEtMC45LDEuN3YzYzAsMC4zLDAsMS4xLDAsMS4zYzAuMSwwLjQsMC4zLDAuNiwwLjgsMC42djAuNEg0MC41TDQwLjUsNDE0Ljh6IE0zNS44LDQxNC44di0wLjRjMC45LTAuMSwwLjktMC4xLDAuOS0xLjV2LTMuN2wtMi42LDUuNmgtMC42bC0yLjQtNS43bC0wLjEsNC4zYzAsMC43LDAuMSwwLjksMC45LDAuOXYwLjRoLTIuNXYtMC40YzAuNiwwLDAuOC0wLjEsMC45LTAuNmMwLTAuMiwwLjEtMC44LDAuMS0xLjJsMC4xLTMuMWMwLTAuMiwwLTAuNiwwLTAuOWMwLTAuNy0wLjEtMC44LTAuOC0wLjh2LTAuNEgzMmwyLjMsNS42bDIuNS01LjZoMi4ydjAuNGMtMC45LDAuMS0wLjksMC4xLTAuOSwxLjN2M2MwLDAuNSwwLDEuMSwwLDEuNWMwLDAuNSwwLjIsMC42LDAuOCwwLjd2MC40TDM1LjgsNDE0LjhDMzUuOCw0MTQuOCwzNS44LDQxNC44LDM1LjgsNDE0Ljh6IE04MS4yLDQxNC44di0wLjRjMC42LDAsMC44LDAsMC45LTAuNWMwLjEtMC41LDAuMS00LjgsMC4xLTUuNmMtMC40LTAuNC0wLjYtMC40LTEuMS0wLjV2LTAuNGgyLjJjMC42LDAuOSwwLjcsMS4xLDEuOCwyLjRsMiwyLjV2LTMuM2MwLTEuMiwwLTEuMi0xLjItMS4zdi0wLjRIODl2MC40Yy0wLjgsMC0wLjksMC4yLTAuOSwxLjRsLTAuMSw1LjdoLTAuNGwtMC43LTAuOGMtMC4zLTAuNC0wLjctMC44LTEtMS4ybC0yLjktMy42djMuOGMwLDEuMiwwLjEsMS4yLDEuMiwxLjN2MC40TDgxLjIsNDE0LjhMODEuMiw0MTQuOHogTTIwLDQxMS4xYzAsMi41LTEuNywzLjktMy43LDMuOWMtMi4xLDAtMy44LTEuNS0zLjgtMy45YzAtMiwxLjMtMy44LDMuNy0zLjhDMTguNCw0MDcuMywyMCw0MDguOSwyMCw0MTEuMXogTTE2LjMsNDE0LjNjMC40LDAsMS0wLjIsMS41LTAuOWMwLjUtMC44LDAuNi0xLjUsMC42LTIuNWMwLTAuOS0wLjMtMS44LTAuOC0yLjNjLTAuMi0wLjItMC43LTAuNi0xLjMtMC42Yy0wLjYsMC0xLjEsMC40LTEuMywwLjZjLTAuNSwwLjYtMC44LDEuNC0wLjgsMi40YzAsMSwwLjEsMS43LDAuNywyLjVDMTUuMyw0MTQuMSwxNS45LDQxNC4zLDE2LjMsNDE0LjNMMTYuMyw0MTQuM3ogTTIwLjcsNDE0LjR2MC40aDN2LTAuNGMtMC44LTAuMS0wLjktMC4xLTAuOS0wLjlsMC0yLjFoMC44YzAuOCwwLDEuMywwLjEsMS4zLDAuOWgwLjR2LTIuNEgyNWMwLDAuOC0wLjMsMC45LTEuMiwwLjloLTF2LTIuNWMwLjMsMCwwLjQsMCwwLjksMGMxLjQsMCwxLjksMCwyLjEsMS4xaDAuNGwtMC4xLTEuOGgtNS40djAuNGMwLjUsMC4xLDAuOCwwLjEsMC44LDAuNGMwLDAuMiwwLjEsMSwwLjEsMS4zdjIuNmMwLDAuMiwwLDEuMSwwLDEuM0MyMS42LDQxNC4zLDIxLjUsNDE0LjMsMjAuNyw0MTQuNEwyMC43LDQxNC40eiBNLTQyLjQsNDE0Ljh2LTAuNGMwLjctMC4xLDAuOS0wLjIsMC45LTAuOXYtMy45YzAtMS41LDAtMS42LTAuOS0xLjd2LTAuNGgzdjAuNGMtMC45LDAuMS0wLjksMC4xLTAuOSwxLjd2M2MwLDAuMywwLDEuMSwwLDEuM2MwLDAuNCwwLjMsMC42LDAuOCwwLjZ2MC40TC00Mi40LDQxNC44Qy00Mi40LDQxNC44LTQyLjQsNDE0LjgtNDIuNCw0MTQuOHogTS0xMC4xLDQxNC44di0wLjRjMC43LTAuMSwwLjktMC4yLDAuOS0wLjl2LTMuOWMwLTEuNSwwLTEuNi0wLjktMS43di0wLjRoM3YwLjRjLTAuOSwwLjEtMC45LDAuMS0wLjksMS43djNjMCwwLjMsMCwxLjEsMCwxLjNjMCwwLjQsMC4zLDAuNiwwLjgsMC42djAuNEwtMTAuMSw0MTQuOEMtMTAuMSw0MTQuOC0xMC4xLDQxNC44LTEwLjEsNDE0Ljh6IE0tNTEuMyw0MTQuOHYtMC40YzAuNiwwLDAuOCwwLDAuOS0wLjVjMC4xLTAuNSwwLjEtNC44LDAuMS01LjZjLTAuNC0wLjQtMC42LTAuNC0xLjEtMC41di0wLjRoMi4yYzAuNiwwLjksMC43LDEuMSwxLjgsMi40bDIuMSwyLjV2LTMuM2MwLTEuMiwwLTEuMi0xLjItMS4zdi0wLjRoMi45djAuNGMtMC44LDAtMC45LDAuMi0wLjksMS40bC0wLjEsNS43SC00NWwtMC43LTAuOGMtMC4zLTAuNC0wLjctMC44LTEtMS4ybC0yLjktMy42djMuOGMwLDEuMiwwLjEsMS4yLDEuMiwxLjN2MC40TC01MS4zLDQxNC44Qy01MS4zLDQxNC44LTUxLjMsNDE0LjgtNTEuMyw0MTQuOHogTS0xNi4xLDQxMi41bDAuNCwwYzAuNCwxLjIsMS4xLDEuOCwyLjIsMS44YzAuOCwwLDEuNS0wLjMsMS41LTEuMWMwLTAuOC0wLjgtMS4yLTEuMi0xLjNsLTAuOS0wLjNjLTAuNi0wLjItMS43LTAuNy0xLjctMi4xYzAtMS40LDEuMS0yLjEsMi4zLTIuMWMwLjUsMCwxLjEsMC4xLDEuNywwLjVsMC40LTAuM2wwLjIsMi4ybC0wLjQsMC4xYy0wLjEtMC41LTAuMi0wLjctMC41LTEuMWMtMC40LTAuNS0wLjgtMC43LTEuNC0wLjdjLTAuOCwwLTEuMiwwLjQtMS4yLDFjMCwwLjksMC45LDEuMiwxLjcsMS40YzAuNCwwLjEsMC44LDAuMywxLjEsMC40YzAuNiwwLjMsMS4xLDEsMS4xLDEuOWMwLDEuMy0xLDIuMy0yLjYsMi4zYy0xLDAtMS42LTAuNC0xLjktMC42bC0wLjYtMC40TC0xNi4xLDQxMi41TC0xNi4xLDQxMi41eiBNLTQuMSw0MTQuOHYtMC4zYzAuNywwLDAuOS0wLjMsMC45LTAuOHYtNS40aC0wLjljLTAuOCwwLTEuNCwwLTEuNCwxLjNoLTAuNGwwLjEtMi4xaDYuN2wwLjEsMi4xSDAuNWMtMC4xLTEuMy0wLjYtMS4zLTEuNC0xLjNoLTAuOXY1LjRjMCwwLjYsMC4yLDAuOCwwLjksMC44djAuM0gtNC4xeiBNLTU2LjksNDA3LjR2MC40Yy0xLDAuMS0xLDAuMS0xLDEuN3YxLjdjMCwwLjksMCwxLjcsMC41LDIuNGMwLjQsMC41LDEsMC42LDEuMywwLjZjMS4xLDAsMS42LTAuNSwxLjktMS40YzAuMi0wLjcsMC4yLTIsMC4yLTIuOGMwLTAuMywwLTEuMSwwLTEuNGMwLTAuNy0wLjQtMC43LTEtMC43di0wLjRoMi44djAuNGMtMC43LDAtMC44LDAuMS0wLjksMC45YzAsMC4yLTAuMSwyLjItMC4xLDIuNWMwLDAuNi0wLjEsMS4xLTAuMiwxLjZjLTAuNSwyLTIuNCwyLjEtMi45LDIuMWMtMC40LDAtMS4yLTAuMS0xLjktMC41Yy0xLjEtMC43LTEuMS0xLjgtMS4xLTN2LTEuN2MwLTAuOCwwLTEuMSwwLTEuM2MtMC4xLTAuNS0wLjMtMC41LTAuOC0wLjZ2LTAuNEwtNTYuOSw0MDcuNEwtNTYuOSw0MDcuNEwtNTYuOSw0MDcuNHogTS0zMC45LDQwNy40djAuNGMtMC43LDAuMS0wLjgsMC4zLTEuNCwxLjhsLTIuMiw1LjNILTM1bC0yLTUuNGMtMC41LTEuNC0wLjYtMS42LTEuMy0xLjd2LTAuNGgzLjV2MC40Yy0wLjYsMC0xLDAtMSwwLjVjMCwwLjIsMC4xLDAuNCwwLjMsMWwxLjMsMy43bDEuNS0zLjljMC4xLTAuMywwLjItMC42LDAuMi0wLjhjMC0wLjUtMC41LTAuNi0xLTAuNnYtMC40Qy0zMy41LDQwNy40LTMwLjksNDA3LjQtMzAuOSw0MDcuNHogTTMuOSw0MTQuOHYtMC40YzAuNi0wLjEsMC44LTAuMSwwLjktMC4yQzUsNDE0LDUsNDEzLjgsNSw0MTN2LTEuM2wtMS45LTNjLTAuNS0wLjgtMC41LTAuOC0xLjItMC45di0wLjRoMy44djAuNGMtMC44LDAtMS4xLDAtMS4xLDAuNGMwLDAuMiwwLjEsMC40LDAuMywwLjdsMS4xLDEuOGwxLTEuOGMwLjItMC40LDAuMy0wLjYsMC4zLTAuOGMwLTAuNC0wLjMtMC40LTAuOC0wLjR2LTAuNGgyLjl2MC40Yy0wLjcsMC0xLDAuMi0xLjgsMS42bC0xLjEsMS45djEuNWMwLDEuMywwLDEuNCwxLjEsMS41djAuNEwzLjksNDE0LjhMMy45LDQxNC44TDMuOSw0MTQuOHogTS0yNC42LDQxNC44YzAtMC41LDAuMS0xLjQsMC4yLTEuOWgtMC40Yy0wLjMsMS4zLTEsMS4yLTIuMSwxLjJjLTEsMC0xLjItMC4zLTEuMi0wLjd2LTIuMWgwLjhjMC45LDAsMS4yLDAuMSwxLjIsMC45aDAuNHYtMi40aC0wLjRjLTAuMSwwLjctMC4yLDAuOS0xLjIsMC45SC0yOHYtMi42aDAuOWMxLjIsMCwxLjcsMC4xLDEuOSwxLjFoMC4zbDAtMS43aC01LjJ2MC40YzAuNSwwLjEsMC44LDAuMSwwLjgsMC40YzAuMSwwLjIsMC4xLDEsMC4xLDEuM3YyLjZjMCwwLjIsMCwxLjEsMCwxLjNjMCwwLjgtMC4xLDAuOS0wLjksMC45djAuNEMtMzAuMiw0MTQuOC0yNC42LDQxNC44LTI0LjYsNDE0Ljh6IE03Mi42LDQxMS42djAuNGMtMC43LDAtMC43LDAuMi0wLjcsMS42djAuNmMtMC42LDAuNC0xLjQsMC45LTIuOCwwLjljLTIuNSwwLTMuNy0xLjktMy43LTMuOGMwLTIuMywxLjYtMy45LDMuNi0zLjljMS4yLDAsMiwwLjUsMi42LDAuOGwwLjQtMC40bDAuMSwyLjNsLTAuMywwLjFjLTAuMi0wLjQtMC40LTAuOS0wLjktMS41Yy0wLjItMC4yLTAuNy0wLjUtMS41LTAuNWMtMS4zLDAtMi4zLDEuMS0yLjMsMy4yYzAsMS43LDAuOCwzLjEsMi4zLDMuMWMwLjgsMCwxLjItMC42LDEuMy0wLjZjMC4xLTAuMiwwLjItMC40LDAuMS0wLjdjMC0wLjktMC4yLTEtMS0xdi0wLjRDNjkuNiw0MTEuNiw3Mi42LDQxMS42LDcyLjYsNDExLjZ6IE0tMjEuMiw0MTAuOGMwLjIsMCwwLjUsMC4xLDAuNywwLjFjMC44LDAsMS41LTAuNywxLjUtMS4yYzAtMC45LTAuNC0xLjYtMS43LTEuNmMtMC4yLDAtMC4zLDAtMC40LDBMLTIxLjIsNDEwLjhMLTIxLjIsNDEwLjh6IE0tMjEuMiw0MTIuNGMwLDEuNywwLDEuOSwwLjksMS45djAuNGgtMy4xdi0wLjRjMC44LTAuMSwwLjktMC4yLDAuOS0xYzAtMC4zLDAtMC42LDAtMC45di0yLjdjMC0wLjksMC0xLjIsMC0xLjRjLTAuMS0wLjQtMC4zLTAuNS0wLjktMC41di0wLjRsMy4zLDBjMS44LDAsMi40LDAuOSwyLjQsMS45YzAsMC43LTAuNCwxLjYtMS40LDEuOWwxLjMsMi4zYzAuNSwwLjksMC43LDEuMSwxLjMsMS4xdjAuMmMtMC4yLDAtMC4zLDAtMC41LDBjLTEuNCwwLTItMC41LTIuNS0xLjdsLTAuNC0wLjljLTAuNC0wLjktMC42LTAuOS0xLjMtMC45TC0yMS4yLDQxMi40TC0yMS4yLDQxMi40TC0yMS4yLDQxMi40eiIvPjwvZz48cGF0aCBpZD0idmVydC1ydWxlIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS13aWR0aD0iMC43NDciIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgZD0iTS03MCwzODAuNHYzNC4zIi8+PC9zdmc+" width="200px" />
+  </div>
+
     <div class="container">
+      <div class="tool-title"> Tableau Charts Embed Tool</div>
         <!-- begin of the tool section -->
         <div class="panel-group" id="accordion">
-            <!-- The fourth tool -->
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
-          Tableau Generator</a>
-        </h4>
-                </div>
-                <div id="collapse4" class="panel-collapse collapse in">
-                    <!-- Begin of the tool -->
-                    <div class="boxing">
-                        <p> Input original tableau embed code. And click:
-                            <button id="tool-four-embed" class="btn btn-primary"> Embed Tableau</button>
-                        </p>
-                        <textarea id="tableau-input" class="tableau-input"></textarea>
-                        <p> Resize the following zone to proper height. And click:
-                            <button id="tool-four-gen" class="btn btn-primary"> Generate Embed Code</button>
-                        </p>
-                        <div id="tableau-wapper" class="tableau-wapper"></div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div id="url-four" class="well well-disp"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End of the tool -->
-                </div>
+          <!-- The fourth tool -->
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                  Generate a Responsive Embed Code for a Tableau Chart
+              </h4>
             </div>
-            <div class="pad"></div>
+          <div id="collapse4" class="panel-collapse collapse in">
+            <!-- Begin of the tool -->
+            <div class="boxing">
+              <p class="instruction"><span class="font-bold">1. </span> Paste the original Tableau embed code in the field below.</p>
+              <textarea id="tableau-input" class="tableau-input" placeholder=" "></textarea>
+              <p class="instruction"><span class="font-bold">2. </span> After pasting above, click the button below to preview the chart.</p>
+              <div class="row">
+                <div class="col-sm-5 col-md-4 col-xs-7">
+                  <button id="tool-four-embed" class="generatebtn"> preview tableau embed</button>
+                </div>
+              </div>
+              <div id="click-show-one" class="click-show">
+                <p class="instruction"><span class="font-bold">3. </span> Use the handle located in the lower right hand side of the chart to adjust the height of the chart.</p>
+                <div class="row">
+                  <div class="col-md-10">
+                    <div id="tableau-wapper" class="tableau-wapper"></div>
+                  </div>
+                </div>
+                <p class="instruction"><span class="font-bold">4. </span> Once the height is set and looks good, click the button below to generate the new embed code.</p>
+                <div class="row">
+                  <div class="col-sm-5 col-md-4 col-xs-7">
+                    <button id="tool-four-gen" class="generatebtn"> Generate Embed Code</button>
+                  </div>
+                </div>
+              </div>
+              <div id="click-show-two" class="click-show">
+                <div class="row">
+                  <div class="col-md-11">
+                    <p class="instruction"><span class="font-bold">5. </span> Here's your new embed code! Press the icon to copy it to your clipboard or select it with your cursor to copy.</p>
+                    <div id="url-four" class="well-disp"></div>
+                  </div>
+                  <div class="col-md-1">
+                    <p class="instruction"> Copy:</p>
+                    <button id="url-four-copy" class="copybtn"><i class="fa fa-clipboard" aria-hidden="true"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <!-- End of the tool -->
+          </div>
         </div>
+        <div class="pad"></div>
+      </div>
     </div>
 </body>
 
